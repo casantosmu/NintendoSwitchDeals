@@ -1,0 +1,55 @@
+@page
+@model NintendoSwitchDeals.Web.Pages.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Deals</h1>
+
+<p>
+    <a asp-page="Create">Create new</a>
+</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Deal[0].DealId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Deal[0].NintendoId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Deal[0].GameName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Deal[0].ThresholdPrice)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Deal)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DealId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NintendoId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GameName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThresholdPrice) €
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.DealId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.DealId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.DealId">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
