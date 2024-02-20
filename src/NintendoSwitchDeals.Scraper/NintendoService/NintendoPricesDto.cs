@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace NintendoSwitchDeals.Scraper.NintendoApi;
+namespace NintendoSwitchDeals.Scraper.NintendoService;
 
 public record NintendoPricesDto(Price[] Prices);
 

@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 using NintendoSwitchDeals.Common;
 using NintendoSwitchDeals.Common.Models;
-using NintendoSwitchDeals.Scraper.NintendoApi;
+using NintendoSwitchDeals.Scraper.NintendoService;
 
 DealsContext dealsContext = new();
 
 List<Deal> deals = await dealsContext.Deals.ToListAsync();
 
-NintendoClient nintendoClient = new();
-NintendoPricesDto response = await nintendoClient.GetPrices(deals.Select(deal => deal.NintendoId));
+NintendoService nintendoService = new();
+NintendoPricesDto response = await nintendoService.GetPrices(deals.Select(deal => deal.NintendoId));
 
 foreach (Price price in response.Prices)
 {

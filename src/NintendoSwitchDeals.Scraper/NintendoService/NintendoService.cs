@@ -1,8 +1,8 @@
 using System.Net.Http.Json;
 
-namespace NintendoSwitchDeals.Scraper.NintendoApi;
+namespace NintendoSwitchDeals.Scraper.NintendoService;
 
-public class NintendoClient : INintendoClient
+public class NintendoService : INintendoService
 {
     private static readonly HttpClient HttpClient = new() { BaseAddress = new Uri("https://api.ec.nintendo.com") };
 
