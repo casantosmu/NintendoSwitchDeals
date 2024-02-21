@@ -22,6 +22,11 @@
                 <span asp-validation-for="Deal.GameName" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Deal.Link" class="control-label"></label>
+                <input asp-for="Deal.Link" class="form-control"/>
+                <span asp-validation-for="Deal.Link" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Deal.ThresholdPrice" class="control-label"></label>
                 <input asp-for="Deal.ThresholdPrice" class="form-control"/>
                 <span asp-validation-for="Deal.ThresholdPrice" class="text-danger"></span>

@@ -1,6 +1,6 @@
 using System.Net.Http.Json;
 
-namespace NintendoSwitchDeals.Scraper.NintendoService;
+namespace NintendoSwitchDeals.Common.Services.NintendoService;
 
 public class NintendoService : INintendoService
 {
@@ -10,9 +10,13 @@ public class NintendoService : INintendoService
     {
         using HttpResponseMessage response =
             await HttpClient.GetAsync($"/v1/price?country=ES&lang=es&ids={string.Join(",", ids)}");
+
         response.EnsureSuccessStatusCode();
+
         string str = await response.Content.ReadAsStringAsync();
+
         NintendoPricesDto? jsonResponse = await response.Content.ReadFromJsonAsync<NintendoPricesDto>();
+
         return jsonResponse ?? throw new Exception("Response deserialization failed.");
     }
 }

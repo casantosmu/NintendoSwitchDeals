@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace NintendoSwitchDeals.Scraper.NintendoService;
+namespace NintendoSwitchDeals.Common.Services.NintendoService;
 
 public record NintendoPricesDto(Price[] Prices);
 
@@ -17,7 +17,7 @@ public record Price(
 
 public record DiscountPrice(
     [property: JsonPropertyName("raw_value")]
-    double Amount,
+    decimal Amount,
     string Currency,
     [property: JsonPropertyName("start_datetime")]
     DateTime StartDatetime,
@@ -26,6 +26,6 @@ public record DiscountPrice(
 
 public record RegularPrice(
     [property: JsonPropertyName("raw_value")]
-    string Amount,
+    decimal Amount,
     string Currency
 );

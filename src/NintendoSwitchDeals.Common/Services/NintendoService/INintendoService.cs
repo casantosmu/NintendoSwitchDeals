@@ -1,4 +1,4 @@
-namespace NintendoSwitchDeals.Scraper.NintendoService;
+namespace NintendoSwitchDeals.Common.Services.NintendoService;
 
 public interface INintendoService
 {

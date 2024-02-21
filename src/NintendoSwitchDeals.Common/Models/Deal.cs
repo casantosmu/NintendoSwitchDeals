@@ -18,5 +18,10 @@ public class Deal
 
     [DisplayName("Threshold price")]
     [Precision(6, 2)]
-    public double? ThresholdPrice { get; init; }
+    public decimal ThresholdPrice { get; init; }
+    
+    [DisplayName("Url")]
+    [Url]
+    [MaxLength(200)]
+    public required string Link { get; init; }
 }
