@@ -5,11 +5,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{354153F4-3796-4E89-942D-DCC05D217B87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NintendoSwitchDeals.Scraper", "src\NintendoSwitchDeals.Scraper\NintendoSwitchDeals.Scraper.csproj", "{30D96845-37EB-40D0-A26B-6AD7E80BC41D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NintendoSwitchDeals.Common", "src\NintendoSwitchDeals.Common\NintendoSwitchDeals.Common.csproj", "{2E0CCBBC-064E-4539-BE21-84B5EF8ECC46}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NintendoSwitchDeals.Web", "src\NintendoSwitchDeals.Web\NintendoSwitchDeals.Web.csproj", "{37DDA1C7-449D-4AB5-BBAC-A9E7D88268BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NintendoSwitchDeals.Scraper", "src\NintendoSwitchDeals.Scraper\NintendoSwitchDeals.Scraper.csproj", "{DC31A4C3-85B8-427C-809F-43B9AA67821F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,22 +16,11 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{30D96845-37EB-40D0-A26B-6AD7E80BC41D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{30D96845-37EB-40D0-A26B-6AD7E80BC41D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{30D96845-37EB-40D0-A26B-6AD7E80BC41D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{30D96845-37EB-40D0-A26B-6AD7E80BC41D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2E0CCBBC-064E-4539-BE21-84B5EF8ECC46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2E0CCBBC-064E-4539-BE21-84B5EF8ECC46}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2E0CCBBC-064E-4539-BE21-84B5EF8ECC46}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2E0CCBBC-064E-4539-BE21-84B5EF8ECC46}.Release|Any CPU.Build.0 = Release|Any CPU
-		{37DDA1C7-449D-4AB5-BBAC-A9E7D88268BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{37DDA1C7-449D-4AB5-BBAC-A9E7D88268BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{37DDA1C7-449D-4AB5-BBAC-A9E7D88268BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{37DDA1C7-449D-4AB5-BBAC-A9E7D88268BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC31A4C3-85B8-427C-809F-43B9AA67821F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC31A4C3-85B8-427C-809F-43B9AA67821F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC31A4C3-85B8-427C-809F-43B9AA67821F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC31A4C3-85B8-427C-809F-43B9AA67821F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{30D96845-37EB-40D0-A26B-6AD7E80BC41D} = {354153F4-3796-4E89-942D-DCC05D217B87}
-		{2E0CCBBC-064E-4539-BE21-84B5EF8ECC46} = {354153F4-3796-4E89-942D-DCC05D217B87}
-		{37DDA1C7-449D-4AB5-BBAC-A9E7D88268BE} = {354153F4-3796-4E89-942D-DCC05D217B87}
 	EndGlobalSection
 EndGlobal
