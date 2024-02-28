@@ -10,7 +10,7 @@ public class Game
 
     public decimal ThresholdPrice { get; set; }
 
-    [StringLength(200)] public required string Url { get; set; }
+    [StringLength(200)] public required Uri Url { get; set; }
 
     public required ICollection<Notification> Notifications { get; set; }
 }
