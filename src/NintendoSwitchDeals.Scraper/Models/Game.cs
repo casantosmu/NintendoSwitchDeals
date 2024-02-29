@@ -12,5 +12,5 @@ public class Game
 
     [StringLength(200)] public required Uri Url { get; set; }
 
-    public required ICollection<Notification> Notifications { get; set; }
+    public ICollection<Notification>? Notifications { get; set; }
 }

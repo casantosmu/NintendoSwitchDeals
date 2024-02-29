@@ -12,5 +12,5 @@ public class Notification
 
     public DateTimeOffset PublishedAt { get; set; }
 
-    public required Game Game { get; set; }
+    public Game? Game { get; set; }
 }

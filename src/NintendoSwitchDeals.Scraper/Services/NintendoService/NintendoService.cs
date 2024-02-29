@@ -8,26 +8,7 @@ public static class NintendoService
 {
     private static readonly HttpClient Client = new() { BaseAddress = new Uri("https://api.ec.nintendo.com") };
 
-    private static GamePrice MapPriceDtoToDomainGamePrice(PriceDto priceDto, Game game)
-    {
-        GameRegularPrice regularPrice =
-            new() { Amount = Decimal.Parse(priceDto.RegularPrice.RawValue.Replace(".", ",")) };
-
-        GameDiscountPrice? discountPrice = null;
-        if (priceDto.DiscountPrice is not null)
-        {
-            discountPrice = new GameDiscountPrice
-            {
-                Amount = Decimal.Parse(priceDto.DiscountPrice.RawValue.Replace(".", ",")),
-                StartDateTime = priceDto.DiscountPrice.StartDateTime,
-                EndDateTime = priceDto.DiscountPrice.EndDateTime
-            };
-        }
-
-        return new GamePrice { Game = game, RegularPrice = regularPrice, DiscountPrice = discountPrice };
-    }
-
-    public static async Task<IEnumerable<GamePrice>> GetGamesWithCurrentPrice(List<Game> games)
+    public static async Task<IEnumerable<GameDiscount>> GetGamesWithDiscount(List<Game> games)
     {
         IEnumerable<long> gameIds = games.Select(g => g.GameId);
 
@@ -36,12 +17,39 @@ public static class NintendoService
 
         PricesDto? response =
             await JsonSerializer.DeserializeAsync<PricesDto>(stream);
-
+        
         if (response is null)
         {
             throw new Exception("Response deserialization failed.");
         }
 
-        return games.Select(g => MapPriceDtoToDomainGamePrice(response.Prices.First(p => p.TitleId == g.GameId), g));
+        List<GameDiscount> gamesWithDiscount = [];
+
+        foreach (Game game in games)
+        {
+            PriceDto price = response.Prices.First(p => p.TitleId == game.GameId);
+
+            if (price.DiscountPrice is null)
+            {
+                continue;
+            }
+
+            GameRegularPrice regularPrice =
+                new() { Amount = Decimal.Parse(price.RegularPrice.RawValue.Replace(".", ",")) };
+
+            GameDiscountPrice discountPrice = new()
+            {
+                Amount = Decimal.Parse(price.DiscountPrice.RawValue.Replace(".", ",")),
+                StartDateTime = price.DiscountPrice.StartDateTime,
+                EndDateTime = price.DiscountPrice.EndDateTime
+            };
+
+            GameDiscount gameDiscount =
+                new() { Game = game, RegularPrice = regularPrice, DiscountPrice = discountPrice };
+
+            gamesWithDiscount.Add(gameDiscount);
+        }
+
+        return gamesWithDiscount;
     }
 }
