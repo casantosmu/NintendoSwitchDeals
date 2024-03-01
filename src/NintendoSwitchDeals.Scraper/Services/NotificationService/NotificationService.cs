@@ -26,6 +26,8 @@ public class NotificationService(ILogger<NotificationService> logger) : INotific
             $"You can now get {discountPercentageText} on {gameDiscount.Game.Name}.\n" +
             $"Original Price: {gameDiscount.RegularPrice.Amount} €\n" +
             $"Discounted Price: {gameDiscount.DiscountPrice.Amount} €\n" +
+            $"Offer starts at: {gameDiscount.DiscountPrice.StartDateTime.Date.ToShortDateString()}\n" +
+            $"Offer ends at: {gameDiscount.DiscountPrice.EndDateTime.Date.ToShortDateString()}\n" +
             $"Link to the game: {gameDiscount.Game.Url}";
 
         PublishRequest request = new() { TopicArn = _topicArn, Message = messageText, Subject = subjectText };

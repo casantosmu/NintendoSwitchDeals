@@ -4,21 +4,28 @@ using NintendoSwitchDeals.Scraper.Domain;
 
 namespace NintendoSwitchDeals.Scraper.Services.NintendoService;
 
-public class NintendoService: INintendoService
+public class NintendoService : INintendoService
 {
-    private readonly HttpClient _client = new() { BaseAddress = new Uri("https://api.ec.nintendo.com") };
+    private readonly HttpClient _httpClient = new() { BaseAddress = new Uri("https://api.ec.nintendo.com") };
+
+    private readonly JsonSerializerOptions _jsonSerializerOptions =
+        new() { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
 
     public async Task<IEnumerable<GameDiscount>> GetGamesWithDiscount(List<Game> games)
     {
         IEnumerable<long> gameIds = games.Select(g => g.GameId);
 
-        await using Stream stream =
-            await _client.GetStreamAsync($"/v1/price?country=ES&lang=es&ids={string.Join(",", gameIds)}");
+        using HttpResponseMessage response =
+            await _httpClient.GetAsync($"/v1/price?country=ES&lang=es&ids={string.Join(",", gameIds)}");
 
-        PricesDto? response =
-            await JsonSerializer.DeserializeAsync<PricesDto>(stream);
+        response.EnsureSuccessStatusCode();
 
-        if (response is null)
+        Stream stream = await response.Content.ReadAsStreamAsync();
+
+        PricesDto? pricesDto =
+            await JsonSerializer.DeserializeAsync<PricesDto>(stream, _jsonSerializerOptions);
+
+        if (pricesDto is null)
         {
             throw new Exception("Response deserialization failed.");
         }
@@ -27,7 +34,7 @@ public class NintendoService: INintendoService
 
         foreach (Game game in games)
         {
-            PriceDto price = response.Prices.First(p => p.TitleId == game.GameId);
+            PriceDto price = pricesDto.Prices.First(p => p.TitleId == game.GameId);
 
             if (price.DiscountPrice is null)
             {
@@ -40,8 +47,8 @@ public class NintendoService: INintendoService
             GameDiscountPrice discountPrice = new()
             {
                 Amount = Decimal.Parse(price.DiscountPrice.RawValue.Replace(".", ",")),
-                StartDateTime = price.DiscountPrice.StartDateTime,
-                EndDateTime = price.DiscountPrice.EndDateTime
+                StartDateTime = price.DiscountPrice.StartDatetime,
+                EndDateTime = price.DiscountPrice.EndDatetime
             };
 
             GameDiscount gameDiscount =

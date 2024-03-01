@@ -8,15 +8,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AWSSDK.SimpleNotificationService" Version="3.7.301.1" />
-        <PackageReference Include="AWSSDK.SSO" Version="3.7.300.53" />
-        <PackageReference Include="AWSSDK.SSOOIDC" Version="3.7.301.48" />
+        <PackageReference Include="AWSSDK.SimpleNotificationService" Version="3.7.301.1"/>
+        <PackageReference Include="AWSSDK.SSO" Version="3.7.300.53"/>
+        <PackageReference Include="AWSSDK.SSOOIDC" Version="3.7.301.48"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.2">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.2"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0"/>
     </ItemGroup>
 
 </Project>

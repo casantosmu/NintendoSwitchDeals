@@ -39,6 +39,5 @@ IEnumerable<GameDiscount> gamesWithDiscount =
 
 foreach (GameDiscount gameDiscount in gamesWithDiscount)
 {
-    Console.WriteLine($"Game discount: {gameDiscount.Game.Name}");
     await notificationService.PublishGameDiscount(gameDiscount);
 }

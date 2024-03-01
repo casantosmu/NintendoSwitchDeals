@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NintendoSwitchDeals.Scraper;
+using NintendoSwitchDeals.Scraper.Models;
 
 #nullable disable
 
