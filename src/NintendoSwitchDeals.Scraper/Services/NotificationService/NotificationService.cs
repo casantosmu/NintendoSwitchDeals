@@ -1,19 +1,21 @@
 using Amazon.SimpleNotificationService;
 using Amazon.SimpleNotificationService.Model;
 
+using Microsoft.Extensions.Logging;
+
 using NintendoSwitchDeals.Scraper.Domain;
 
 namespace NintendoSwitchDeals.Scraper.Services.NotificationService;
 
-public static class NotificationService
+public class NotificationService(ILogger<NotificationService> logger) : INotificationService
 {
-    private static readonly AmazonSimpleNotificationServiceClient Client = new();
+    private readonly AmazonSimpleNotificationServiceClient _client = new();
 
-    private static string s_topicArn = Environment.GetEnvironmentVariable("SNS_TOPIC_ARN") ??
-                                       throw new ArgumentNullException(nameof(s_topicArn),
-                                           "SNS_TOPIC_ARN environment variable is not set.");
+    private readonly string _topicArn = Environment.GetEnvironmentVariable("SNS_TOPIC_ARN") ??
+                                        throw new Exception(
+                                            "SNS_TOPIC_ARN environment variable is not set.");
 
-    public static async Task PublishGameDiscount(GameDiscount gameDiscount)
+    public async Task PublishGameDiscount(GameDiscount gameDiscount)
     {
         string discountPercentageText = $"{Math.Round(gameDiscount.DiscountPercentage)}%";
 
@@ -26,11 +28,11 @@ public static class NotificationService
             $"Discounted Price: {gameDiscount.DiscountPrice.Amount} €\n" +
             $"Link to the game: {gameDiscount.Game.Url}";
 
-        PublishRequest request = new() { TopicArn = s_topicArn, Message = messageText, Subject = subjectText };
+        PublishRequest request = new() { TopicArn = _topicArn, Message = messageText, Subject = subjectText };
 
-        PublishResponse? response = await Client.PublishAsync(request);
+        PublishResponse response = await _client.PublishAsync(request);
 
-        Console.WriteLine($"Successfully published message ID: {response.MessageId}");
-        Console.WriteLine($"Message sent to topic: {messageText}");
+        logger.LogInformation("Successfully published message ID: {MessageId}", response.MessageId);
+        logger.LogInformation("Message sent to topic: {messageText}", messageText);
     }
 }

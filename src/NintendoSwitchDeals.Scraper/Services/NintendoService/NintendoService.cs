@@ -4,20 +4,20 @@ using NintendoSwitchDeals.Scraper.Domain;
 
 namespace NintendoSwitchDeals.Scraper.Services.NintendoService;
 
-public static class NintendoService
+public class NintendoService: INintendoService
 {
-    private static readonly HttpClient Client = new() { BaseAddress = new Uri("https://api.ec.nintendo.com") };
+    private readonly HttpClient _client = new() { BaseAddress = new Uri("https://api.ec.nintendo.com") };
 
-    public static async Task<IEnumerable<GameDiscount>> GetGamesWithDiscount(List<Game> games)
+    public async Task<IEnumerable<GameDiscount>> GetGamesWithDiscount(List<Game> games)
     {
         IEnumerable<long> gameIds = games.Select(g => g.GameId);
 
         await using Stream stream =
-            await Client.GetStreamAsync($"/v1/price?country=ES&lang=es&ids={string.Join(",", gameIds)}");
+            await _client.GetStreamAsync($"/v1/price?country=ES&lang=es&ids={string.Join(",", gameIds)}");
 
         PricesDto? response =
             await JsonSerializer.DeserializeAsync<PricesDto>(stream);
-        
+
         if (response is null)
         {
             throw new Exception("Response deserialization failed.");
