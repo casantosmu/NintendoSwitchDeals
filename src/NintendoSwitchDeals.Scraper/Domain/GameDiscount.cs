@@ -2,11 +2,11 @@ namespace NintendoSwitchDeals.Scraper.Domain;
 
 public class GameDiscount
 {
-    public required Game Game { get; set; }
+    public required Game Game { get; init; }
 
-    public required GameRegularPrice RegularPrice { get; set; }
+    public required GameRegularPrice RegularPrice { get; init; }
 
-    public required GameDiscountPrice DiscountPrice { get; set; }
+    public required GameDiscountPrice DiscountPrice { get; init; }
 
     public decimal DiscountPercentage
     {

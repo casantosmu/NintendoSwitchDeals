@@ -4,11 +4,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using NintendoSwitchDeals.Scraper.Domain;
+using NintendoSwitchDeals.Scraper.Models;
 using NintendoSwitchDeals.Scraper.Services.NintendoService;
 using NintendoSwitchDeals.Scraper.Services.NotificationService;
 
+using Game = NintendoSwitchDeals.Scraper.Domain.Game;
+
 ServiceCollection services = [];
 services.AddLogging(builder => builder.AddConsole());
+services.AddDbContext<ScraperContext>();
 services.AddSingleton<NotificationService>();
 services.AddSingleton<NintendoService>();
 IServiceProvider serviceProvider = services.BuildServiceProvider();
@@ -22,7 +26,8 @@ Game game1 = new()
     Name = "Portal: colección complementaria",
     ThresholdPrice = 10,
     Url =
-        "https://www.nintendo.es/Juegos/Programas-descargables-Nintendo-Switch/Portal-coleccion-complementaria-2168991.html"
+        new Uri(
+            "https://www.nintendo.es/Juegos/Programas-descargables-Nintendo-Switch/Portal-coleccion-complementaria-2168991.html")
 };
 
 Game game2 = new()
@@ -30,8 +35,9 @@ Game game2 = new()
     GameId = 70010000063715,
     Name = "The Legend of Zelda: Tears of the Kingdom",
     ThresholdPrice = 40,
-    Url =
+    Url = new Uri(
         "https://www.nintendo.es/Juegos/Juegos-de-Nintendo-Switch/The-Legend-of-Zelda-Tears-of-the-Kingdom-1576884.html"
+    )
 };
 
 IEnumerable<GameDiscount> gamesWithDiscount =
