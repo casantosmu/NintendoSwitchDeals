@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace NintendoSwitchDeals.Scraper.Models;
 
 public class Game

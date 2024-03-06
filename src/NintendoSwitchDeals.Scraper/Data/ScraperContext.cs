@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace NintendoSwitchDeals.Scraper.Models;
+using NintendoSwitchDeals.Scraper.Models;
+
+namespace NintendoSwitchDeals.Scraper.Data;
 
 public class ScraperContext : DbContext
 {

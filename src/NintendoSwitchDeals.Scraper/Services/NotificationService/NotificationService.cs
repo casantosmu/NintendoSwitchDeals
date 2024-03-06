@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 
+using NintendoSwitchDeals.Scraper.Data;
 using NintendoSwitchDeals.Scraper.Domain;
 using NintendoSwitchDeals.Scraper.Models;
 

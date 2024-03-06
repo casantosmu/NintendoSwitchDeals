@@ -3,8 +3,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
+using NintendoSwitchDeals.Scraper.Data;
 using NintendoSwitchDeals.Scraper.Domain;
-using NintendoSwitchDeals.Scraper.Models;
 using NintendoSwitchDeals.Scraper.Services.NintendoService;
 using NintendoSwitchDeals.Scraper.Services.NotificationService;
 
