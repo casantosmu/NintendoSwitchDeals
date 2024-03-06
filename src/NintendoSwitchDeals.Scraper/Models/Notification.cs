@@ -8,9 +8,9 @@ public class Notification
 
     public decimal DiscountPrice { get; set; }
 
-    public DateTimeOffset EndDateTime { get; set; }
+    public DateTime EndDateTime { get; set; }
 
-    public DateTimeOffset PublishedAt { get; set; }
+    public DateTime PublishedAt { get; set; }
 
-    public Game? Game { get; set; }
+    public Game Game { get; set; } = null!;
 }

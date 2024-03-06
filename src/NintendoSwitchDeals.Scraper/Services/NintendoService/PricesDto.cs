@@ -8,6 +8,6 @@ public record RegularPriceDto(string RawValue);
 
 public record DiscountPriceDto(
     string RawValue,
-    DateTimeOffset StartDatetime,
-    DateTimeOffset EndDatetime
+    DateTime StartDatetime,
+    DateTime EndDatetime
 );

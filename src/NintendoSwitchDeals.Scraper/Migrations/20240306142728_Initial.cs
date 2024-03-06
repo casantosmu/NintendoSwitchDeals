@@ -17,9 +17,9 @@ namespace NintendoSwitchDeals.Scraper.Migrations
                 {
                     GameId = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
                     ThresholdPrice = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Url = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false)
+                    Url = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -34,8 +34,8 @@ namespace NintendoSwitchDeals.Scraper.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     GameId = table.Column<long>(type: "INTEGER", nullable: false),
                     DiscountPrice = table.Column<decimal>(type: "TEXT", nullable: false),
-                    EndDateTime = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
-                    PublishedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false)
+                    EndDateTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    PublishedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using NintendoSwitchDeals.Scraper;
 using NintendoSwitchDeals.Scraper.Models;
 
 #nullable disable
@@ -12,7 +11,7 @@ using NintendoSwitchDeals.Scraper.Models;
 namespace NintendoSwitchDeals.Scraper.Migrations
 {
     [DbContext(typeof(ScraperContext))]
-    [Migration("20240227162221_Initial")]
+    [Migration("20240306142728_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -29,7 +28,6 @@ namespace NintendoSwitchDeals.Scraper.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("ThresholdPrice")
@@ -37,7 +35,6 @@ namespace NintendoSwitchDeals.Scraper.Migrations
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
                     b.HasKey("GameId");
@@ -54,13 +51,13 @@ namespace NintendoSwitchDeals.Scraper.Migrations
                     b.Property<decimal>("DiscountPrice")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTimeOffset>("EndDateTime")
+                    b.Property<DateTime>("EndDateTime")
                         .HasColumnType("TEXT");
 
                     b.Property<long>("GameId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("PublishedAt")
+                    b.Property<DateTime>("PublishedAt")
                         .HasColumnType("TEXT");
 
                     b.HasKey("NotificationId");
