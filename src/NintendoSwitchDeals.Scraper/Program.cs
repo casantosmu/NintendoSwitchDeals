@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 
 using NintendoSwitchDeals.Scraper.Data;
 using NintendoSwitchDeals.Scraper.Domain;
+using NintendoSwitchDeals.Scraper.Services.GameService;
 using NintendoSwitchDeals.Scraper.Services.NintendoService;
 using NintendoSwitchDeals.Scraper.Services.NotificationService;
 
@@ -13,37 +14,26 @@ using Game = NintendoSwitchDeals.Scraper.Domain.Game;
 ServiceCollection services = [];
 services.AddLogging(builder => builder.AddConsole());
 services.AddDbContext<ScraperContext>();
-services.AddSingleton<NotificationService>();
-services.AddSingleton<NintendoService>();
+services.AddTransient<INotificationService, NotificationService>();
+services.AddTransient<IGameService, GameService>();
+services.AddTransient<INintendoService, NintendoService>();
 IServiceProvider serviceProvider = services.BuildServiceProvider();
 
-NotificationService notificationService = serviceProvider.GetRequiredService<NotificationService>();
-NintendoService nintendoService = serviceProvider.GetRequiredService<NintendoService>();
+INotificationService notificationService = serviceProvider.GetRequiredService<INotificationService>();
+IGameService gameService = serviceProvider.GetRequiredService<IGameService>();
+INintendoService nintendoService = serviceProvider.GetRequiredService<INintendoService>();
 
-Game game1 = new()
-{
-    GameId = 70070000013727,
-    Name = "Portal: colección complementaria",
-    ThresholdPrice = 10,
-    Url =
-        new Uri(
-            "https://www.nintendo.es/Juegos/Programas-descargables-Nintendo-Switch/Portal-coleccion-complementaria-2168991.html")
-};
-
-Game game2 = new()
-{
-    GameId = 70010000063715,
-    Name = "The Legend of Zelda: Tears of the Kingdom",
-    ThresholdPrice = 40,
-    Url = new Uri(
-        "https://www.nintendo.es/Juegos/Juegos-de-Nintendo-Switch/The-Legend-of-Zelda-Tears-of-the-Kingdom-1576884.html"
-    )
-};
+List<Game> games = await gameService.GetGames();
 
 IEnumerable<GameDiscount> gamesWithDiscount =
-    await nintendoService.GetGamesWithDiscount([game1, game2]);
+    await nintendoService.GetGamesWithDiscount(games);
 
 foreach (GameDiscount gameDiscount in gamesWithDiscount)
 {
-    await notificationService.PublishGameDiscount(gameDiscount);
+    bool shouldNotifyGameDiscount = await notificationService.ShouldNotifyGameDiscount(gameDiscount);
+
+    if (shouldNotifyGameDiscount)
+    {
+        await notificationService.PublishGameDiscount(gameDiscount);
+    }
 }

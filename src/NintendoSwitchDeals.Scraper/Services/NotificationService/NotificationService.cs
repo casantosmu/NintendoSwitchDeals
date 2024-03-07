@@ -7,11 +7,16 @@ using Microsoft.Extensions.Logging;
 
 using NintendoSwitchDeals.Scraper.Data;
 using NintendoSwitchDeals.Scraper.Domain;
+using NintendoSwitchDeals.Scraper.Exceptions;
 using NintendoSwitchDeals.Scraper.Models;
+using NintendoSwitchDeals.Scraper.Services.GameService;
 
 namespace NintendoSwitchDeals.Scraper.Services.NotificationService;
 
-public class NotificationService(ILogger<NotificationService> logger, ScraperContext scraperContext)
+public class NotificationService(
+    ILogger<NotificationService> logger,
+    ScraperContext scraperContext,
+    IGameService gameService)
     : INotificationService
 {
     private readonly AmazonSimpleNotificationServiceClient _client = new();
@@ -22,14 +27,18 @@ public class NotificationService(ILogger<NotificationService> logger, ScraperCon
 
     public async Task PublishGameDiscount(GameDiscount gameDiscount)
     {
-        bool gameExists = await scraperContext.Notifications.AnyAsync(n => n.GameId == gameDiscount.Game.GameId);
+        bool gameExists = await gameService.GameExists(gameDiscount.Game);
 
-        if (gameExists)
+        if (!gameExists)
         {
-            throw new Exception(
-                $"Notification for ({gameDiscount.Game.GameId}) {gameDiscount.Game.Name} already exists.\n" +
-                $"Discount amount: {gameDiscount.DiscountPrice.Amount}\n" +
-                $"Discount end date: {gameDiscount.DiscountPrice.EndDateTime})");
+            throw new GameNotFound(gameDiscount.Game);
+        }
+
+        bool shouldNotify = await ShouldNotifyGameDiscount(gameDiscount);
+
+        if (!shouldNotify)
+        {
+            throw new NotificationConflict(gameDiscount);
         }
 
         string discountPercentageText = $"{Math.Round(gameDiscount.DiscountPercentage)}%";
@@ -47,14 +56,14 @@ public class NotificationService(ILogger<NotificationService> logger, ScraperCon
 
         PublishRequest request = new() { TopicArn = _topicArn, Message = messageText, Subject = subjectText };
 
-        await using IDbContextTransaction transaction = await scraperContext.Database.BeginTransactionAsync();
-
         Notification notification = new()
         {
             DiscountPrice = gameDiscount.DiscountPrice.Amount,
             GameId = gameDiscount.Game.GameId,
             EndDateTime = gameDiscount.DiscountPrice.EndDateTime
         };
+
+        await using IDbContextTransaction transaction = await scraperContext.Database.BeginTransactionAsync();
 
         scraperContext.Notifications.Add(notification);
         await scraperContext.SaveChangesAsync();
@@ -63,7 +72,15 @@ public class NotificationService(ILogger<NotificationService> logger, ScraperCon
 
         await transaction.CommitAsync();
 
-        logger.LogInformation("Successfully published message ID: {MessageId}", response.MessageId);
-        logger.LogInformation("Message sent to topic: {messageText}", messageText);
+        logger.LogInformation(
+            "Successfully published message ID: {MessageId}\nSubject: {subjectText}\nMessage: {messageText}",
+            response.MessageId, subjectText, messageText);
+    }
+
+    public async Task<bool> ShouldNotifyGameDiscount(GameDiscount gameDiscount)
+    {
+        return !await scraperContext.Notifications.AnyAsync(n =>
+            n.GameId == gameDiscount.Game.GameId && n.EndDateTime >= DateTime.Now &&
+            n.DiscountPrice <= gameDiscount.DiscountPrice.Amount);
     }
 }

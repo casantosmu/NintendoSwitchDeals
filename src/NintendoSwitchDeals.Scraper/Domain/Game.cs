@@ -6,7 +6,7 @@ public class Game
 
     public required string Name { get; init; }
 
-    public decimal ThresholdPrice { get; set; }
+    public decimal ThresholdPrice { get; init; }
 
     public required Uri Url { get; init; }
 }
