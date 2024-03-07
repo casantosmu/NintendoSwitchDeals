@@ -6,7 +6,7 @@ namespace NintendoSwitchDeals.Scraper.Services.NintendoService;
 
 public class NintendoService : INintendoService
 {
-    private readonly HttpClient _httpClient = new() { BaseAddress = new Uri("https://api.ec.nintendo.com") };
+    private static readonly HttpClient HttpClient = new() { BaseAddress = new Uri("https://api.ec.nintendo.com") };
 
     private readonly JsonSerializerOptions _jsonSerializerOptions =
         new() { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
@@ -16,7 +16,7 @@ public class NintendoService : INintendoService
         IEnumerable<long> gameIds = games.Select(g => g.GameId);
 
         using HttpResponseMessage response =
-            await _httpClient.GetAsync($"/v1/price?country=ES&lang=es&ids={string.Join(",", gameIds)}");
+            await HttpClient.GetAsync($"/v1/price?country=ES&lang=es&ids={string.Join(",", gameIds)}");
 
         response.EnsureSuccessStatusCode();
 

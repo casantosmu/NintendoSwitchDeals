@@ -10,7 +10,7 @@ public class Notification
 
     public DateTime EndDateTime { get; set; }
 
-    public DateTime PublishedAt { get; set; }
+    public DateTime PublishedAt { get; set; } = DateTime.Now;
 
     public Game Game { get; set; } = null!;
 }
