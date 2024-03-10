@@ -8,7 +8,5 @@ public class Game
 
     public decimal ThresholdPrice { get; set; }
 
-    public required Uri Url { get; set; }
-
     public IEnumerable<Notification> Notifications { get; } = new List<Notification>();
 }

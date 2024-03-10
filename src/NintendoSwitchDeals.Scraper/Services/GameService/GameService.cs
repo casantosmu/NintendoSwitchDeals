@@ -22,9 +22,6 @@ public class GameService(ScraperContext scraperContext) : IGameService
 
     private static Game MapGameModelToDomain(Models.Game game)
     {
-        return new Game
-        {
-            GameId = game.GameId, Name = game.Name, ThresholdPrice = game.ThresholdPrice, Url = game.Url
-        };
+        return new Game { GameId = game.GameId, Name = game.Name, ThresholdPrice = game.ThresholdPrice };
     }
 }

@@ -4,16 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-
 using NintendoSwitchDeals.Scraper.Data;
-using NintendoSwitchDeals.Scraper.Models;
 
 #nullable disable
 
 namespace NintendoSwitchDeals.Scraper.Migrations
 {
     [DbContext(typeof(ScraperContext))]
-    [Migration("20240306142728_Initial")]
+    [Migration("20240309100836_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -33,10 +31,6 @@ namespace NintendoSwitchDeals.Scraper.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("ThresholdPrice")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("GameId");

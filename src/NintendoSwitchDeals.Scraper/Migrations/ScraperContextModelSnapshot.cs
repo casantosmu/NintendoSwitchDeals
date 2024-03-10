@@ -3,9 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-
 using NintendoSwitchDeals.Scraper.Data;
-using NintendoSwitchDeals.Scraper.Models;
 
 #nullable disable
 
@@ -30,10 +28,6 @@ namespace NintendoSwitchDeals.Scraper.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("ThresholdPrice")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("GameId");
