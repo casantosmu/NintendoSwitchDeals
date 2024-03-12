@@ -1,4 +1,5 @@
 // ReSharper disable ClassNeverInstantiated.Global
+
 namespace NintendoSwitchDeals.Scraper.Services.NintendoService;
 
 public record PricesDto(IEnumerable<PriceDto> Prices);

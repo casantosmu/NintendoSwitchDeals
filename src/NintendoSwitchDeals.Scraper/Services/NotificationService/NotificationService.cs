@@ -4,26 +4,25 @@ using Amazon.SimpleNotificationService.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 using NintendoSwitchDeals.Scraper.Data;
 using NintendoSwitchDeals.Scraper.Domain;
 using NintendoSwitchDeals.Scraper.Exceptions;
 using NintendoSwitchDeals.Scraper.Models;
+using NintendoSwitchDeals.Scraper.Options;
 using NintendoSwitchDeals.Scraper.Services.GameService;
 
 namespace NintendoSwitchDeals.Scraper.Services.NotificationService;
 
 public class NotificationService(
     ILogger<NotificationService> logger,
+    IOptions<NotificationOptions> awsOptions,
     ScraperContext scraperContext,
     IGameService gameService)
     : INotificationService
 {
     private readonly AmazonSimpleNotificationServiceClient _client = new();
-
-    private readonly string _topicArn = Environment.GetEnvironmentVariable("SNS_TOPIC_ARN") ??
-                                        throw new Exception(
-                                            "SNS_TOPIC_ARN environment variable is not set.");
 
     public async Task PublishGameDiscount(GameDiscount gameDiscount)
     {
@@ -54,7 +53,10 @@ public class NotificationService(
             $"Offer ends at: {gameDiscount.DiscountPrice.EndDateTime.Date.ToShortDateString()}\n" +
             $"Link to the game: {gameDiscount.Game.Url}";
 
-        PublishRequest request = new() { TopicArn = _topicArn, Message = messageText, Subject = subjectText };
+        PublishRequest request = new()
+        {
+            TopicArn = awsOptions.Value.SnsTopicArn, Message = messageText, Subject = subjectText
+        };
 
         Notification notification = new()
         {

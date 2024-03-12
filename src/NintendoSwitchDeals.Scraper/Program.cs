@@ -1,13 +1,17 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using NintendoSwitchDeals.Scraper.Data;
 using NintendoSwitchDeals.Scraper.Domain;
+using NintendoSwitchDeals.Scraper.Options;
 using NintendoSwitchDeals.Scraper.Services.GameService;
 using NintendoSwitchDeals.Scraper.Services.NintendoService;
 using NintendoSwitchDeals.Scraper.Services.NotificationService;
 
 HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+
+builder.Services.Configure<NotificationOptions>(builder.Configuration.GetRequiredSection(nameof(NotificationOptions)));
 
 builder.Services.AddSingleton<ScraperContext>();
 builder.Services.AddTransient<INotificationService, NotificationService>();
