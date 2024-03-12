@@ -9,4 +9,9 @@ public class Game
     public decimal ThresholdPrice { get; init; }
 
     public Uri Url => new($"https://ec.nintendo.com/ES/es/titles/{GameId}");
+
+    public override string ToString()
+    {
+        return $"({GameId}) {Name}";
+    }
 }

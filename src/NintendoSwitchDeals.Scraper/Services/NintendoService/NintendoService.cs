@@ -1,10 +1,12 @@
 using System.Text.Json;
 
+using Microsoft.Extensions.Logging;
+
 using NintendoSwitchDeals.Scraper.Domain;
 
 namespace NintendoSwitchDeals.Scraper.Services.NintendoService;
 
-public class NintendoService : INintendoService
+public class NintendoService(ILogger<NintendoService> logger) : INintendoService
 {
     private static readonly HttpClient HttpClient = new() { BaseAddress = new Uri("https://api.ec.nintendo.com") };
 
@@ -38,6 +40,7 @@ public class NintendoService : INintendoService
 
             if (price.DiscountPrice is null)
             {
+                logger.LogDebug("Game fetched without a discount price: {game}", game);
                 continue;
             }
 
@@ -53,6 +56,8 @@ public class NintendoService : INintendoService
 
             GameDiscount gameDiscount =
                 new() { Game = game, RegularPrice = regularPrice, DiscountPrice = discountPrice };
+
+            logger.LogDebug("Game fetched with a discount price: {gameDiscount}", gameDiscount);
 
             gamesWithDiscount.Add(gameDiscount);
         }

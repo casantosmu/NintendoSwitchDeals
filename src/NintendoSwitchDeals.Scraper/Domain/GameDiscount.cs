@@ -16,4 +16,9 @@ public class GameDiscount
             return discount / RegularPrice.Amount * 100;
         }
     }
+
+    public override string ToString()
+    {
+        return $"{Game}. Regular price: {RegularPrice}. Discount price: {DiscountPrice}";
+    }
 }

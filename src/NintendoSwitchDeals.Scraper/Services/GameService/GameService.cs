@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
 using NintendoSwitchDeals.Scraper.Data;
-
-using Game = NintendoSwitchDeals.Scraper.Domain.Game;
+using NintendoSwitchDeals.Scraper.Domain;
 
 namespace NintendoSwitchDeals.Scraper.Services.GameService;
 

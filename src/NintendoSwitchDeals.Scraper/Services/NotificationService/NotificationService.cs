@@ -79,8 +79,15 @@ public class NotificationService(
 
     public async Task<bool> ShouldNotifyGameDiscount(GameDiscount gameDiscount)
     {
-        return !await scraperContext.Notifications.AnyAsync(n =>
+        bool shouldNotifyGameDiscount = !await scraperContext.Notifications.AnyAsync(n =>
             n.GameId == gameDiscount.Game.GameId && n.EndDateTime >= DateTime.Now &&
             n.DiscountPrice <= gameDiscount.DiscountPrice.Amount);
+
+        string notificationStatus = shouldNotifyGameDiscount ? "publish" : "not publish";
+
+        logger.LogDebug("Should {NotificationStatus} notification for game discount: {gameDiscount}",
+            notificationStatus, gameDiscount);
+
+        return shouldNotifyGameDiscount;
     }
 }
