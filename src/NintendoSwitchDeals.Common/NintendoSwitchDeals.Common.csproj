@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AWSSDK.SimpleNotificationService" Version="3.7.301.1"/>
+        <PackageReference Include="AWSSDK.SSO" Version="3.7.300.53"/>
+        <PackageReference Include="AWSSDK.SSOOIDC" Version="3.7.301.48"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.2">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.2"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Services\NintendoService\NintendoService.cs" />
+    </ItemGroup>
+
+</Project>
