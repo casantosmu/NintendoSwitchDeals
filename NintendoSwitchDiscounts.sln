@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{354153F4-3796-4E89-942D-DCC05D217B87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NintendoSwitchDiscounts.Common", "src\NintendoSwitchDiscounts.Common\NintendoSwitchDiscounts.Common.csproj", "{DC31A4C3-85B8-427C-809F-43B9AA67821F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NintendoSwitchDiscounts.NotifyDiscounts", "src\NintendoSwitchDiscounts.NotifyDiscounts\NintendoSwitchDiscounts.NotifyDiscounts.csproj", "{C7972936-3F24-4C2D-8EBF-C5CCD05886C7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC31A4C3-85B8-427C-809F-43B9AA67821F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC31A4C3-85B8-427C-809F-43B9AA67821F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC31A4C3-85B8-427C-809F-43B9AA67821F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC31A4C3-85B8-427C-809F-43B9AA67821F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7972936-3F24-4C2D-8EBF-C5CCD05886C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7972936-3F24-4C2D-8EBF-C5CCD05886C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7972936-3F24-4C2D-8EBF-C5CCD05886C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7972936-3F24-4C2D-8EBF-C5CCD05886C7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
+EndGlobal

@@ -1,3 +1,3 @@
-# Nintendo Switch Deals Scraper
+# Nintendo Switch Discounts
 
-This is a console application for scraping Nintendo Switch game deals.
+This is a console application for scraping Nintendo Switch game discounts.
