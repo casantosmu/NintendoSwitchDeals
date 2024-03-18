@@ -17,8 +17,4 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.2"/>
     </ItemGroup>
 
-    <ItemGroup>
-      <Compile Remove="Services\NintendoService\NintendoService.cs" />
-    </ItemGroup>
-
 </Project>

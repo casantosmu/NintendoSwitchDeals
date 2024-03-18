@@ -5,4 +5,6 @@ namespace NintendoSwitchDiscounts.Common.Services.NintendoService;
 public interface INintendoService
 {
     Task<IEnumerable<GameDiscount>> GetGamesWithDiscount(List<Game> games);
+
+    Task<IEnumerable<Game>> GetMyWishlist();
 }
