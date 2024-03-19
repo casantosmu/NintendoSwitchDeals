@@ -30,7 +30,6 @@ IEnumerable<GameDiscount> gamesWithDiscount = await nintendoService.GetGamesWith
 foreach (GameDiscount gameDiscount in gamesWithDiscount)
 {
     bool shouldNotifyGameDiscount = await notificationService.ShouldNotifyGameDiscount(gameDiscount);
-
     if (shouldNotifyGameDiscount)
     {
         await notificationService.NotifyGameDiscount(gameDiscount);

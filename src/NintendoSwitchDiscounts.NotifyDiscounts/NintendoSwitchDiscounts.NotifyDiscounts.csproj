@@ -13,7 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\NintendoSwitchDiscounts.Common\NintendoSwitchDiscounts.Common.csproj" />
+        <ProjectReference Include="..\NintendoSwitchDiscounts.Common\NintendoSwitchDiscounts.Common.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

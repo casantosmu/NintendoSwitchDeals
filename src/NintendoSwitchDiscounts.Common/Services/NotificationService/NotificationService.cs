@@ -27,17 +27,15 @@ public class NotificationService(
     public async Task NotifyGameDiscount(GameDiscount gameDiscount)
     {
         bool gameExists = await gameService.GameExists(gameDiscount.Game);
-
         if (!gameExists)
         {
-            throw new GameNotFound(gameDiscount.Game);
+            throw new GameNotFoundException(gameDiscount.Game);
         }
 
         bool shouldNotify = await ShouldNotifyGameDiscount(gameDiscount);
-
         if (!shouldNotify)
         {
-            throw new NotificationConflict(gameDiscount);
+            throw new NotificationConflictException(gameDiscount);
         }
 
         string discountPercentageText = $"{Math.Round(gameDiscount.DiscountPercentage)}%";
