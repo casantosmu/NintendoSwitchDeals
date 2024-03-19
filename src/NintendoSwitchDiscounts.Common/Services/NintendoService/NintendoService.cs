@@ -20,57 +20,61 @@ public class NintendoService(ILogger<NintendoService> logger, IOptions<NintendoO
 
     public async Task<IEnumerable<GameDiscount>> GetGamesWithDiscount(List<Game> games)
     {
-        if (games.Count == 0)
-        {
-            return [];
-        }
+        const int maxBatchSize = 50;
 
-        IEnumerable<long> gameIds = games.Select(g => g.GameId);
-
-        using HttpResponseMessage response =
-            await HttpClient.GetAsync($"{V1BaseAddress}/v1/price?country=ES&lang=es&ids={string.Join(",", gameIds)}");
-
-        LogHttpRequest(response.RequestMessage);
-        response.EnsureSuccessStatusCode();
-
-        Stream stream = await response.Content.ReadAsStreamAsync();
-
-        PricesDto? pricesDto =
-            await JsonSerializer.DeserializeAsync<PricesDto>(stream, _jsonSerializerOptions);
-
-        if (pricesDto is null)
-        {
-            throw new Exception("Response deserialization failed.");
-        }
-
+        List<Game> remainingGames = games.ToList();
         List<GameDiscount> gamesWithDiscount = [];
 
-        foreach (Game game in games)
+        while (remainingGames.Count != 0)
         {
-            PriceDto price = pricesDto.Prices.First(p => p.TitleId == game.GameId);
+            List<Game> currentBatchGames = remainingGames.Take(maxBatchSize).ToList();
+            IEnumerable<long> currentBatchIds = currentBatchGames.Select(g => g.GameId);
 
-            if (price.DiscountPrice is null)
+            using HttpResponseMessage response =
+                await HttpClient.GetAsync(
+                    $"{V1BaseAddress}/price?country=ES&lang=es&ids={string.Join(",", currentBatchIds)}");
+
+            LogHttpRequest(response.RequestMessage);
+            response.EnsureSuccessStatusCode();
+
+            Stream stream = await response.Content.ReadAsStreamAsync();
+
+            PricesDto? pricesDto =
+                await JsonSerializer.DeserializeAsync<PricesDto>(stream, _jsonSerializerOptions);
+
+            if (pricesDto is null)
             {
-                logger.LogDebug("Game fetched without a discount price: {game}", game);
-                continue;
+                throw new Exception("Response deserialization failed.");
             }
 
-            GameRegularPrice regularPrice =
-                new() { Amount = Decimal.Parse(price.RegularPrice.RawValue.Replace(".", ",")) };
-
-            GameDiscountPrice discountPrice = new()
+            foreach (Game game in currentBatchGames)
             {
-                Amount = Decimal.Parse(price.DiscountPrice.RawValue.Replace(".", ",")),
-                StartDateTime = price.DiscountPrice.StartDatetime,
-                EndDateTime = price.DiscountPrice.EndDatetime
-            };
+                PriceDto price = pricesDto.Prices.First(p => p.TitleId == game.GameId);
 
-            GameDiscount gameDiscount =
-                new() { Game = game, RegularPrice = regularPrice, DiscountPrice = discountPrice };
+                if (price.DiscountPrice is null)
+                {
+                    logger.LogDebug("Game fetched without a discount price: {game}", game);
+                    continue;
+                }
 
-            logger.LogDebug("Game fetched with a discount price: {gameDiscount}", gameDiscount);
+                GameRegularPrice regularPrice =
+                    new() { Amount = Decimal.Parse(price.RegularPrice.RawValue.Replace(".", ",")) };
 
-            gamesWithDiscount.Add(gameDiscount);
+                GameDiscountPrice discountPrice = new()
+                {
+                    Amount = Decimal.Parse(price.DiscountPrice.RawValue.Replace(".", ",")),
+                    StartDateTime = price.DiscountPrice.StartDatetime,
+                    EndDateTime = price.DiscountPrice.EndDatetime
+                };
+
+                GameDiscount gameDiscount =
+                    new() { Game = game, RegularPrice = regularPrice, DiscountPrice = discountPrice };
+
+                logger.LogDebug("Game fetched with a discount price: {gameDiscount}", gameDiscount);
+                gamesWithDiscount.Add(gameDiscount);
+            }
+
+            remainingGames = remainingGames.Skip(maxBatchSize).ToList();
         }
 
         return gamesWithDiscount;
