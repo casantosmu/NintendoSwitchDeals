@@ -9,15 +9,15 @@ public class GameDiscountMessage
         string discountPercentageText = $"{Math.Round(gameDiscount.DiscountPercentage)}%";
 
         Subject =
-            $"{discountPercentageText} on {gameDiscount.Game.Name}!";
+            $"{discountPercentageText} OFF {gameDiscount.Game.Name}!";
 
         Message =
-            $"You can now get {discountPercentageText} on {gameDiscount.Game.Name}.\n" +
+            $"🎉 {discountPercentageText} OFF on {gameDiscount.Game.Name}! 🎉\n" +
+            $"Check out this deal: {gameDiscount.Game.Url}\n\n" +
             $"Original Price: {gameDiscount.RegularPrice.Amount} €\n" +
-            $"Discounted Price: {gameDiscount.DiscountPrice.Amount} €\n" +
-            $"Offer starts at: {gameDiscount.DiscountPrice.StartDateTime.Date.ToShortDateString()}\n" +
-            $"Offer ends at: {gameDiscount.DiscountPrice.EndDateTime.Date.ToShortDateString()}\n" +
-            $"Link to the game: {gameDiscount.Game.Url}";
+            $"Discounted Price: {gameDiscount.DiscountPrice.Amount} €\n\n" +
+            $"Offer starts: {gameDiscount.DiscountPrice.StartDateTime.Date.ToShortDateString()}\n" +
+            $"Offer ends: {gameDiscount.DiscountPrice.EndDateTime.Date.ToShortDateString()}";
     }
 
     public string Subject { get; }
