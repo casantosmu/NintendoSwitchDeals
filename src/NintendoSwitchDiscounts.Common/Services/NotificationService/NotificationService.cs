@@ -38,22 +38,13 @@ public class NotificationService(
             throw new NotificationConflictException(gameDiscount);
         }
 
-        string discountPercentageText = $"{Math.Round(gameDiscount.DiscountPercentage)}%";
-
-        string subjectText =
-            $"{discountPercentageText} on {gameDiscount.Game.Name}!";
-
-        string messageText =
-            $"You can now get {discountPercentageText} on {gameDiscount.Game.Name}.\n" +
-            $"Original Price: {gameDiscount.RegularPrice.Amount} €\n" +
-            $"Discounted Price: {gameDiscount.DiscountPrice.Amount} €\n" +
-            $"Offer starts at: {gameDiscount.DiscountPrice.StartDateTime.Date.ToShortDateString()}\n" +
-            $"Offer ends at: {gameDiscount.DiscountPrice.EndDateTime.Date.ToShortDateString()}\n" +
-            $"Link to the game: {gameDiscount.Game.Url}";
+        GameDiscountMessage gameDiscountMessage = new(gameDiscount);
 
         PublishRequest request = new()
         {
-            TopicArn = awsOptions.Value.SnsTopicArn, Message = messageText, Subject = subjectText
+            TopicArn = awsOptions.Value.SnsTopicArn,
+            Message = gameDiscountMessage.Message,
+            Subject = gameDiscountMessage.Subject
         };
 
         Notification notification = new()
@@ -73,8 +64,8 @@ public class NotificationService(
         await transaction.CommitAsync();
 
         logger.LogInformation(
-            "Successfully published message ID: {MessageId}\nSubject: {subjectText}\nMessage: {messageText}",
-            response.MessageId, subjectText, messageText);
+            "Successfully published message ID: {MessageId}\n{GameDiscountMessage}",
+            response.MessageId, gameDiscountMessage);
     }
 
     public async Task<bool> ShouldNotifyGameDiscount(GameDiscount gameDiscount)
