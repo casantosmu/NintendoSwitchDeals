@@ -19,6 +19,7 @@ public class GameDiscount
 
     public override string ToString()
     {
-        return $"{Game}. Regular price: {RegularPrice}. Discount price: {DiscountPrice}";
+        return
+            $"{nameof(Game)}: {Game}, {nameof(RegularPrice)}: {RegularPrice}, {nameof(DiscountPrice)}: {DiscountPrice}";
     }
 }

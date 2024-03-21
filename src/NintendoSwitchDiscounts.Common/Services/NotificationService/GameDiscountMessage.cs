@@ -25,6 +25,6 @@ public class GameDiscountMessage
 
     public override string ToString()
     {
-        return $"Subject: {Subject}\nMessage:{Message}";
+        return $"{nameof(Subject)}: {Subject}, {nameof(Message)}: {Message}";
     }
 }

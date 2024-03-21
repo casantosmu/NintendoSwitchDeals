@@ -13,15 +13,15 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Update="appsettings.Development.json">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-        <None Update="appsettings.json">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
+        <ProjectReference Include="..\NintendoSwitchDiscounts.Common\NintendoSwitchDiscounts.Common.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\NintendoSwitchDiscounts.Common\NintendoSwitchDiscounts.Common.csproj"/>
+        <None Update="appsettings.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="appsettings.Development.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 </Project>

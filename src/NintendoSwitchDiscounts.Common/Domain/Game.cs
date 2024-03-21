@@ -10,6 +10,6 @@ public class Game
 
     public override string ToString()
     {
-        return $"({GameId}) {Name}";
+        return $"{nameof(GameId)}: {GameId}, {nameof(Name)}: {Name}";
     }
 }

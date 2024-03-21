@@ -64,8 +64,9 @@ public class NotificationService(
         await transaction.CommitAsync();
 
         logger.LogInformation(
-            "Successfully published message ID: {MessageId}\n{GameDiscountMessage}",
-            response.MessageId, gameDiscountMessage);
+            "Successfully published message with ID: '{MessageId}' for game discount: {GameDiscount}",
+            response.MessageId, gameDiscount);
+        logger.LogDebug("Discount notification message details:\n{GameDiscountMessage}", gameDiscountMessage);
     }
 
     public async Task<bool> ShouldNotifyGameDiscount(GameDiscount gameDiscount)
