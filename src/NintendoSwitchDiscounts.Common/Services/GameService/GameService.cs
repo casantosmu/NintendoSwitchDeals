@@ -21,15 +21,12 @@ public class GameService(NintendoSwitchDiscountsContext context) : IGameService
 
     public async Task AddGame(Game game)
     {
-        await context.Games.AddAsync(new Models.Game
-        {
-            GameId = game.GameId, Name = game.Name, ThresholdPrice = game.ThresholdPrice
-        });
+        await context.Games.AddAsync(new Models.Game { GameId = game.GameId, Name = game.Name });
         await context.SaveChangesAsync();
     }
 
     private static Game MapGameModelToDomain(Models.Game game)
     {
-        return new Game { GameId = game.GameId, Name = game.Name, ThresholdPrice = game.ThresholdPrice };
+        return new Game { GameId = game.GameId, Name = game.Name };
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NintendoSwitchDiscounts.Common.Data;
 
@@ -10,9 +11,11 @@ using NintendoSwitchDiscounts.Common.Data;
 namespace NintendoSwitchDiscounts.Common.Migrations
 {
     [DbContext(typeof(NintendoSwitchDiscountsContext))]
-    partial class CommonContextModelSnapshot : ModelSnapshot
+    [Migration("20240321153930_RemoveGameThresholdPrice")]
+    partial class RemoveGameThresholdPrice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.2");

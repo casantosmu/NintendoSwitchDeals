@@ -6,7 +6,5 @@ public class Game
 
     public required string Name { get; set; }
 
-    public decimal ThresholdPrice { get; set; }
-
     public IEnumerable<Notification> Notifications { get; } = new List<Notification>();
 }
