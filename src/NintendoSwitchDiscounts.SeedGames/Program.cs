@@ -19,14 +19,13 @@ builder.Services.AddTransient<INintendoService, NintendoService>();
 
 IHost host = builder.Build();
 
-NintendoSwitchDiscountsContext context = host.Services.GetRequiredService<NintendoSwitchDiscountsContext>();
 IGameService gameService = host.Services.GetRequiredService<IGameService>();
 INintendoService nintendoService = host.Services.GetRequiredService<INintendoService>();
 ILogger<Program> logger = host.Services.GetRequiredService<ILogger<Program>>();
 
 logger.LogInformation("Starting NintendoSwitchDiscounts.SeedGames");
 
-IEnumerable<Game> games = await nintendoService.GetMyWishlist();
+List<Game> games = await nintendoService.GetMyWishlist();
 
 foreach (Game game in games)
 {

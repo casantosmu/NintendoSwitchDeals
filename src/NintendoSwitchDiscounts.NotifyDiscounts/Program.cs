@@ -29,7 +29,7 @@ ILogger<Program> logger = host.Services.GetRequiredService<ILogger<Program>>();
 logger.LogInformation("Starting NintendoSwitchDiscounts.NotifyDiscounts");
 
 List<Game> games = await gameService.GetGames();
-IEnumerable<GameDiscount> gamesWithDiscount = await nintendoService.GetGamesWithDiscount(games);
+List<GameDiscount> gamesWithDiscount = await nintendoService.GetGamesWithDiscount(games);
 
 foreach (GameDiscount gameDiscount in gamesWithDiscount)
 {

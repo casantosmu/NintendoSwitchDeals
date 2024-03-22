@@ -18,7 +18,7 @@ public class NintendoService(ILogger<NintendoService> logger, IOptions<NintendoO
     private readonly JsonSerializerOptions _jsonSerializerOptions =
         new() { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
 
-    public async Task<IEnumerable<GameDiscount>> GetGamesWithDiscount(List<Game> games)
+    public async Task<List<GameDiscount>> GetGamesWithDiscount(IEnumerable<Game> games)
     {
         const int maxBatchSize = 50;
 
@@ -80,7 +80,7 @@ public class NintendoService(ILogger<NintendoService> logger, IOptions<NintendoO
         return gamesWithDiscount;
     }
 
-    public async Task<IEnumerable<Game>> GetMyWishlist()
+    public async Task<List<Game>> GetMyWishlist()
     {
         HttpRequestMessage requestMessage =
             new(HttpMethod.Get, $"{BaseAddress}/my/wishlist?page=1&per=400");
@@ -111,7 +111,7 @@ public class NintendoService(ILogger<NintendoService> logger, IOptions<NintendoO
         return await GetGames(gamesIds);
     }
 
-    private async Task<IEnumerable<Game>> GetGames(IEnumerable<string> ids)
+    private async Task<List<Game>> GetGames(IEnumerable<string> ids)
     {
         const int maxBatchSize = 50;
 
